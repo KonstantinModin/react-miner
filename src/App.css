@@ -1,38 +1,24 @@
 .App {
-  text-align: center;
+  /* border: 1px solid red; */
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App .Miner {
+  /* border: 1px solid red; */
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App .Miner .Miner-row {
+  /* border: 1px solid red; */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+}
+
+.App .Miner .Miner-row .Miner-item {
+  height: 2rem;
+  width: 2rem;
+  border: 1px solid black;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App .Miner .Miner-row .Miner-item.red {
+  background-color: pink;
+  font-weight: bold;
 }
