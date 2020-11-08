@@ -5,7 +5,8 @@ import "./App.css";
 const newItem = {
   opened: false,
   mine: false,
-  count: 0,
+  count: null,
+  flag: false,
 };
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
   const setMinePercentageHandler = (e) => setMinePercentage(+e.target.value);
 
   const [field, setField] = useState(null);
+
   useEffect(() => {
     const totalItemsCount = size * size;
     const totalMinesCount = ((totalItemsCount / 100) * minePercentage) | 0;
@@ -24,7 +26,7 @@ const App = () => {
 
     const generateMines = (result = []) => {
       if (result.length === totalMinesCount) return result;
-      const newMine = Math.round(Math.random() * totalItemsCount);
+      const newMine = (Math.random() * totalItemsCount) | 0;
       return generateMines(
         result.includes(newMine) ? result : [...result, newMine]
       );
@@ -34,13 +36,38 @@ const App = () => {
       const mines = generateMines();
       console.log("mines", mines);
 
-      const emptyArray = [...Array(size)].map((_, y) =>
+      const withMinesArray = [...Array(size)].map((_, y) =>
         [...Array(size)].map((_, x) => ({
           ...newItem,
-          mine: mines.includes(x + 1 + y * size),
+          mine: mines.includes(x + y * size),
         }))
       );
-      return emptyArray;
+
+      const countMinesAround = (y, x) => {
+        const isMine = (y, x) => {
+          return withMinesArray[y] && withMinesArray[y][x]?.mine ? 1 : 0;
+        };
+
+        return (
+          isMine(y - 1, x - 1) +
+          isMine(y - 1, x) +
+          isMine(y - 1, x + 1) +
+          isMine(y, x - 1) +
+          isMine(y, x + 1) +
+          isMine(y + 1, x - 1) +
+          isMine(y + 1, x) +
+          isMine(y + 1, x + 1)
+        );
+      };
+
+      const withNumbersMinesArray = withMinesArray.map((row, y) =>
+        row.map((item, x) => ({
+          ...item,
+          count: item.mine ? null : countMinesAround(y, x),
+        }))
+      );
+
+      return withNumbersMinesArray;
     };
     setField(generateField());
   }, [size, minePercentage]);
