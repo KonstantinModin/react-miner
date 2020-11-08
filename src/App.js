@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Miner from "./components/Miner";
 import "./App.css";
 
 const newItem = {
-  opened: false,
+  closed: true,
   mine: false,
   count: null,
   flag: false,
@@ -11,12 +11,29 @@ const newItem = {
 
 const App = () => {
   const [size, setSize] = useState(6);
-  const [minePercentage, setMinePercentage] = useState(15);
+  const [minePercentage, setMinePercentage] = useState(10);
 
   const setSizeHandler = (e) => setSize(+e.target.value);
   const setMinePercentageHandler = (e) => setMinePercentage(+e.target.value);
 
   const [field, setField] = useState(null);
+
+  const updateItem = useCallback(
+    (y, x, updatedName, updatedValue) => {
+      const newField = field.map((row) => row.slice());
+      newField[y][x][updatedName] = updatedValue;
+      setField(newField);
+    },
+    [field]
+  );
+
+  const handleItemClick = useCallback(
+    (y, x, count) => {
+      console.log(y, x, count);
+      updateItem(y, x, "closed", false);
+    },
+    [updateItem]
+  );
 
   useEffect(() => {
     const totalItemsCount = size * size;
@@ -89,13 +106,13 @@ const App = () => {
       <label>Mines percentage</label>
       <input
         type="range"
-        min={15}
-        max={35}
+        min={10}
+        max={50}
         value={minePercentage}
         onChange={setMinePercentageHandler}
       />
       <span>{minePercentage}</span>
-      <Miner field={field} />
+      <Miner field={field} handleItemClick={handleItemClick} />
     </div>
   );
 };

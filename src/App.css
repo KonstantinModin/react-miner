@@ -16,9 +16,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 }
 
 .App .Miner .Miner-row .Miner-item.red {
   background-color: pink;
-  font-weight: bold;
+}
+.App .Miner .Miner-row .Miner-item.one {
+  color: green;
+}
+.App .Miner .Miner-row .Miner-item.two {
+  color: blue;
+}
+.App .Miner .Miner-row .Miner-item.three {
+  color: red;
+}
+.App .Miner .Miner-row .Miner-item.four {
+  color: rgb(211, 109, 126);
+}
+.App .Miner .Miner-row .Miner-item.five {
+  color: brown;
+}
+.App .Miner .Miner-row .Miner-item.six {
+  color: darkblue;
+}
+.App .Miner .Miner-row .Miner-item.seven {
+  color: darkorchid;
+}
+.App .Miner .Miner-row .Miner-item.eight {
+  color: darkturquoise;
+}
+.App .Miner .Miner-row .Miner-item.closed {
+  background-color: grey;
 }
