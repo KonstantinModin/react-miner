@@ -12,9 +12,17 @@ const newItem = {
 const App = () => {
   const [size, setSize] = useState(6);
   const [minePercentage, setMinePercentage] = useState(10);
+  const [minesToGo, setMinesToGo] = useState(null);
+  const [gameOver, setGameOver] = useState(false);
 
-  const setSizeHandler = (e) => setSize(+e.target.value);
-  const setMinePercentageHandler = (e) => setMinePercentage(+e.target.value);
+  const setSizeHandler = (e) => {
+    setSize(+e.target.value);
+    setGameOver(false);
+  };
+  const setMinePercentageHandler = (e) => {
+    setMinePercentage(+e.target.value);
+    setGameOver(false);
+  };
 
   const [field, setField] = useState(null);
 
@@ -27,10 +35,79 @@ const App = () => {
     [field]
   );
 
+  const aroundCoords = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ];
+
+  const checkedAround = [];
+
+  const tryOpenAround = (y, x) => {
+    aroundCoords.forEach(([deltaY, deltaX]) => {
+      if (!field[y + deltaY] || !field[y + deltaY][x + deltaX]) {
+        return;
+      }
+
+      // empty cell around clicked/ emty-opened before
+      if (field[y + deltaY][x + deltaX].count === 0) {
+        updateItem(y + deltaY, x + deltaX, "closed", false);
+        if (
+          checkedAround.some(
+            (item) => item.y === y + deltaY && item.x === x + deltaX
+          )
+        ) {
+          return;
+        }
+        checkedAround.push({ y: y + deltaY, x: x + deltaX });
+        tryOpenAround(y + deltaY, x + deltaX);
+      }
+
+      // cell with number
+      if (field[y + deltaY][x + deltaX].count) {
+        updateItem(y + deltaY, x + deltaX, "closed", false);
+      }
+    });
+  };
+
+  const finishGame = (result) => {
+    setTimeout(() => alert(`game ${result ? "win" : "lost"}!`), 0);
+    setGameOver(true);
+  };
+
   const handleItemClick = useCallback(
-    (y, x, count) => {
+    (y, x, count, e) => {
+      e.preventDefault();
+      if (e.type === "contextmenu") {
+        return console.log("Right click");
+      }
       console.log(y, x, count);
+
+      if (field[y][x].flag || gameOver) {
+        return;
+      }
+
       updateItem(y, x, "closed", false);
+      if (field[y][x].mine) {
+        return finishGame(false);
+      } else {
+        const allOpened = field.reduce(
+          (res, row) => res + row.reduce((res, item) => res + +!item.closed, 0),
+          0
+        );
+        console.log("allOpened", allOpened);
+        if (size * size - allOpened === minesToGo) {
+          return finishGame(true);
+        }
+        if (!field[y][x].count) {
+          tryOpenAround(y, x);
+        }
+      }
     },
     [updateItem]
   );
@@ -87,6 +164,7 @@ const App = () => {
       return withNumbersMinesArray;
     };
     setField(generateField());
+    setMinesToGo(totalMinesCount);
   }, [size, minePercentage]);
 
   // console.log("field", field);
@@ -107,11 +185,12 @@ const App = () => {
       <input
         type="range"
         min={10}
-        max={50}
+        max={30}
         value={minePercentage}
         onChange={setMinePercentageHandler}
       />
       <span>{minePercentage}</span>
+      <div>Mines to go : {minesToGo}</div>
       <Miner field={field} handleItemClick={handleItemClick} />
     </div>
   );

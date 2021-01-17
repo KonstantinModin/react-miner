@@ -40,9 +40,11 @@ const Row = ({ row, y, handleItemClick }) => {
               ? getCountClass(count)
               : ""
           }`}
-          onClick={() => handleItemClick(y, x, count)}
+          onClick={(e) => handleItemClick(y, x, count, e)}
+          onContextMenu={(e) => handleItemClick(y, x, count, e)}
         >
           {flag ? "f" : closed ? "" : mine ? "x" : count ? count : ""}
+          <span>{mine ? "x" : count ? count : ""}</span>
         </div>
       ))}
     </div>
