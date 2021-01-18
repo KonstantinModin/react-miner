@@ -84,7 +84,7 @@ const App = () => {
     (y, x, count, e) => {
       e.preventDefault();
       if (e.type === "contextmenu") {
-        return console.log("Right click");
+        return updateItem(y, x, "flag", true);
       }
       console.log(y, x, count);
 
