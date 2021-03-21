@@ -1,0 +1,14 @@
+.Overlay {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+}
+
+.Overlay-contentWrapper {
+  margin: auto;
+  font-size: 10rem;
+  color: rgb(199, 103, 103);
+}

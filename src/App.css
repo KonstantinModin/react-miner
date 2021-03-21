@@ -1,1 +1,8 @@
-
+.App {
+  /* border: 1px solid red; */
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

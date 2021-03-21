@@ -7,10 +7,12 @@ const Header = (props) => {
     setSize,
     minePercentage,
     setMinePercentage,
-    minesToGo,
+    minesAmount,
     triggerRestart,
     setTriggerRestart,
-    setGameOver,
+    setGameOverMessage,
+    flagsAmount,
+    gameWon,
   } = props;
 
   const newGameHandler = () => {
@@ -19,17 +21,20 @@ const Header = (props) => {
 
   const setSizeHandler = (e) => {
     setSize(+e.target.value);
-    setGameOver(false);
+    setGameOverMessage("");
   };
 
   const setMinePercentageHandler = (e) => {
     setMinePercentage(+e.target.value);
-    setGameOver(false);
+    setGameOverMessage("");
   };
 
   return (
     <div className="Header">
       <h1>React-mine</h1>
+      <div className="App-control">
+        <button onClick={newGameHandler}>New Game</button>
+      </div>
       <div className="App-control">
         <label>Field size</label>
         <input
@@ -52,10 +57,7 @@ const Header = (props) => {
         />
         <span>{minePercentage}</span>
       </div>
-      <div className="App-control">
-        <button onClick={newGameHandler}>New Game</button>
-      </div>
-      <div>Mines to go : {minesToGo}</div>
+      <div>Mines to go : {minesAmount - flagsAmount}</div>
     </div>
   );
 };
