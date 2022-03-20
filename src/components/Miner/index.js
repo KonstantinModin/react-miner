@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
-import Row from "../Row";
-import "./index.css";
+import { useEffect } from 'react';
+import Row from '../Row';
+import { GameState } from '../../utilities/gameState';
+import aroundCords from '../../utilities/aroundCords';
 
 const newItem = {
   closed: true,
@@ -11,20 +12,25 @@ const newItem = {
 
 const Miner = (props) => {
   const {
-    gameOverMessage,
-    setGameOverMessage,
+    gameState,
+    setGameState,
     size,
     minePercentage,
     triggerRestart,
     field,
-    minesAmount,
     setField,
     setMinesAmount,
+    setShouldShowOverlay,
+    setGameStarted,
+    setIsTimerTicking,
   } = props;
 
   // preparing field for new game
   useEffect(() => {
-    setGameOverMessage("");
+    setGameState(GameState.Active);
+    setIsTimerTicking(true);
+    setShouldShowOverlay(true);
+    setGameStarted(null);
     const totalItemsCount = size * size;
     const totalMinesCount = ((totalItemsCount / 100) * minePercentage) | 0;
 
@@ -46,22 +52,13 @@ const Miner = (props) => {
         }))
       );
 
-      const countMinesAround = (y, x) => {
-        const isMine = (y, x) => {
-          return withMinesArray[y] && withMinesArray[y][x]?.mine ? 1 : 0;
-        };
-
-        return (
-          isMine(y - 1, x - 1) +
-          isMine(y - 1, x) +
-          isMine(y - 1, x + 1) +
-          isMine(y, x - 1) +
-          isMine(y, x + 1) +
-          isMine(y + 1, x - 1) +
-          isMine(y + 1, x) +
-          isMine(y + 1, x + 1)
-        );
-      };
+      const countMinesAround = (y, x) =>
+        aroundCords.reduce((res, [deltaY, deltaX]) => {
+          const currentItem =
+            withMinesArray[deltaY + y] &&
+            withMinesArray[deltaY + y][deltaX + x];
+          return res + (currentItem ? +currentItem.mine : 0);
+        }, 0);
 
       const withNumbersMinesArray = withMinesArray.map((row, y) =>
         row.map((item, x) => ({
@@ -79,9 +76,7 @@ const Miner = (props) => {
   const rowProps = {
     field,
     setField,
-    size,
-    setGameOverMessage,
-    gameOverMessage,
+    gameState,
   };
 
   return (

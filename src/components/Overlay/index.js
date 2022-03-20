@@ -1,10 +1,18 @@
-import React from "react";
-import "./index.css";
+import { gameStateMessages } from '../../utilities/gameState';
+import './index.css';
 
-const Overlay = ({ message, onClick }) => {
+const Overlay = ({ gameState, onClick }) => {
+  const { label, color } = gameStateMessages[gameState];
+
   return (
-    <div className="Overlay" onClick={onClick}>
-      <div className="Overlay-contentWrapper">{message}</div>
+    <div
+      className="Overlay"
+      onClick={onClick}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      <div className="Overlay-contentWrapper" style={{ color }}>
+        {label}
+      </div>
     </div>
   );
 };

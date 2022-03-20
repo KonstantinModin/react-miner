@@ -1,0 +1,53 @@
+.Miner-item {
+  height: 2rem;
+  width: 2rem;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  position: relative;
+}
+
+.Miner-item.mine {
+  background-color: pink;
+  background-image: url(../../img/mine.png);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Miner-item.flag {
+  background-image: url(../../img/flag.png);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Miner-item.one {
+  color: green;
+}
+.Miner-item.two {
+  color: blue;
+}
+.Miner-item.three {
+  color: red;
+}
+.Miner-item.four {
+  color: rgb(211, 109, 126);
+}
+.Miner-item.five {
+  color: brown;
+}
+.Miner-item.six {
+  color: darkblue;
+}
+.Miner-item.seven {
+  color: darkorchid;
+}
+.Miner-item.eight {
+  color: darkturquoise;
+}
+.Miner-item.closed {
+  background-color: grey;
+}
