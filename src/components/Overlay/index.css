@@ -7,6 +7,10 @@
   display: flex;
 }
 
+.Overlay.won {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .Overlay-contentWrapper {
   margin: auto;
   font-size: 10rem;
