@@ -90,6 +90,9 @@ const App = () => {
           gameState={gameState}
         />
       )}
+      <div className="App-createdBy">
+        Created with React by Konstantin Modin © 2020{' '}
+      </div>
     </div>
   );
 };
