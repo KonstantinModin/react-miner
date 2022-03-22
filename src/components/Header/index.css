@@ -31,3 +31,14 @@
   flex-direction: column;
   justify-content: center;
 }
+@media screen and (max-width: 600px) {
+  .Header .Header-topRow {
+    flex-direction: column;
+  }
+  .Header .App-control {
+    margin-top: 0.5rem;
+  }
+  .Header h1 {
+    margin: 0.5rem 0;
+  }
+}

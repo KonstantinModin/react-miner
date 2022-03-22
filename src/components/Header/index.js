@@ -81,6 +81,9 @@ const Header = (props) => {
     return <div>Time : {gameStarted ? timeToShow : 0} sec</div>;
   };
 
+  const calculatedFieldSize = ((window.innerWidth - 40) / 34) | 0;
+  const maxFieldSize = Math.min(calculatedFieldSize, 20);
+
   return (
     <div className="Header">
       <div className="Header-topRow">
@@ -92,30 +95,32 @@ const Header = (props) => {
           {renderTime()}
         </div>
       </div>
-      <div className="App-control">
-        <button onClick={newGameHandler}>New Game</button>
-      </div>
-      <div className="App-control">
-        <label>Field size</label>
-        <input
-          type="range"
-          min={5}
-          max={17}
-          value={size}
-          onChange={setSizeHandler}
-        />
-        <span>{size}</span>
-      </div>
-      <div className="App-control">
-        <label>Mines percentage</label>
-        <input
-          type="range"
-          min={10}
-          max={30}
-          value={minePercentage}
-          onChange={setMinePercentageHandler}
-        />
-        <span>{minePercentage}</span>
+      <div className="Header-topRow">
+        <div className="App-control">
+          <button onClick={newGameHandler}>New Game</button>
+        </div>
+        <div className="App-control">
+          <label>Field size</label>
+          <input
+            type="range"
+            min={5}
+            max={maxFieldSize}
+            value={size}
+            onChange={setSizeHandler}
+          />
+          <span>{size}</span>
+        </div>
+        <div className="App-control">
+          <label>Mines percentage</label>
+          <input
+            type="range"
+            min={10}
+            max={30}
+            value={minePercentage}
+            onChange={setMinePercentageHandler}
+          />
+          <span>{minePercentage}</span>
+        </div>
       </div>
     </div>
   );
