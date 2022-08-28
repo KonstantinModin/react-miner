@@ -1,6 +1,6 @@
 # React Minesweeper
 
-Classical minesweeper written in React with option to set field size and density of mines.
+Classical minesweeper written with React with option to set field size and density of mines.
 
 ## Author
 
