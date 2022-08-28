@@ -1,9 +1,14 @@
-import { useEffect } from 'react';
-import confetti from 'canvas-confetti';
-import { GameState, gameStateMessages } from '../../utilities/gameState';
-import './index.css';
+import { useEffect, useState } from "react";
+import confetti from "canvas-confetti";
 
-const Overlay = ({ gameState, onClick }) => {
+import { GameState, gameStateMessages } from "../../utilities/gameState";
+import Results from "../Results";
+
+import "./index.css";
+
+const Overlay = ({ gameState, onClick, size, minePercentage }) => {
+  const [gameStats, setGameStats] = useState();
+
   const { label, color } = gameStateMessages[gameState];
 
   useEffect(() => {
@@ -44,14 +49,27 @@ const Overlay = ({ gameState, onClick }) => {
     };
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      const results = JSON.parse(window.localStorage.getItem("results"));
+      const currentGameStats =
+        results && results[size] && results[size][minePercentage];
+
+      setGameStats(currentGameStats);
+    }, 100);
+  }, [gameState, size]);
+
   return (
     <div
       className={`Overlay ${gameState}`}
       onClick={onClick}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <div className="Overlay-contentWrapper" style={{ color }}>
-        {label}
+      <div className="Overlay-contentWrapper">
+        <div className="Overlay-label" style={{ color }}>
+          {label}
+        </div>
+        <Results gameStats={gameStats} />
       </div>
     </div>
   );

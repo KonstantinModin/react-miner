@@ -1,5 +1,5 @@
-import Item from '../Item';
-import './index.css';
+import Item from "../Item";
+import "./index.css";
 
 const Row = ({ row, y, ...rest }) => (
   <div className="Miner-row">

@@ -1,9 +1,9 @@
-import { useRef } from 'react';
-import { GameState } from '../../utilities/gameState';
-import aroundCords from '../../utilities/aroundCords';
-import './index.css';
+import { useRef } from "react";
+import { GameState } from "../../utilities/gameState";
+import aroundCords from "../../utilities/aroundCords";
+import "./index.css";
 
-const countClass = '-one-two-three-four-five-six-seven-eight'.split`-`;
+const countClass = "-one-two-three-four-five-six-seven-eight".split`-`;
 
 const Item = (props) => {
   const {
@@ -49,7 +49,6 @@ const Item = (props) => {
     const { count, closed } = field[y][x];
     if (!count || closed) return;
 
-    console.log('Two button Clicked');
     const flagsAround = aroundCords.reduce((res, [deltaY, deltaX]) => {
       if (!field[y + deltaY] || !field[y + deltaY][x + deltaX]) {
         return res;
@@ -118,7 +117,7 @@ const Item = (props) => {
     }
 
     // Right click
-    if (e.type === 'contextmenu') {
+    if (e.type === "contextmenu") {
       return handleRightClick(y, x);
     }
 
@@ -129,16 +128,16 @@ const Item = (props) => {
   const getClassName = () =>
     `Miner-item ${
       gameState === GameState.Lost && mine
-        ? 'mine'
+        ? "mine"
         : (gameState === GameState.Won && mine) || flag
-        ? 'flag'
+        ? "flag"
         : closed
-        ? 'closed'
+        ? "closed"
         : mine
-        ? 'mine'
+        ? "mine"
         : count
         ? countClass[count]
-        : ''
+        : ""
     }`;
 
   const getContent = () => !closed && count > 0 && count;

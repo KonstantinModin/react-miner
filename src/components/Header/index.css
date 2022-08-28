@@ -6,6 +6,7 @@
   display: inline;
   margin-right: 2rem;
 }
+
 .Header button {
   background-color: dodgerblue;
   outline: none;
@@ -31,6 +32,7 @@
   flex-direction: column;
   justify-content: center;
 }
+
 @media screen and (max-width: 600px) {
   .Header .Header-topRow {
     flex-direction: column;

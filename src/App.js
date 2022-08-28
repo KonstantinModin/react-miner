@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { GameState } from './utilities/gameState';
-import Miner from './components/Miner';
-import Header from './components/Header';
-import Overlay from './components/Overlay';
+import { GameState } from "./utilities/gameState";
+import Miner from "./components/Miner";
+import Header from "./components/Header";
+import Overlay from "./components/Overlay";
 
-import './App.css';
+import "./App.css";
 
 const App = () => {
   const [size, setSize] = useState(6);
@@ -50,8 +50,28 @@ const App = () => {
 
   // stop timer when game ends
   useEffect(() => {
+    const updateLocalStorage = (gameState) => {
+      const timePassed = ((Date.now() - gameStarted) / 1e3) | 0;
+
+      const results = JSON.parse(window.localStorage.getItem("results")) || {};
+      if (!results[size]) results[size] = {};
+      if (!results[size][minePercentage])
+        results[size][minePercentage] = { won: [], lost: [] };
+
+      const newGameResult = { sec: timePassed };
+      results[size][minePercentage][gameState] = [
+        ...results[size][minePercentage][gameState],
+        newGameResult,
+      ]
+        .sort((a, b) => a.sec - b.sec)
+        .slice(0, 5);
+
+      window.localStorage.setItem("results", JSON.stringify(results));
+    };
+
     if (gameState !== GameState.Active) {
       setIsTimerTicking(false);
+      updateLocalStorage(gameState);
     }
   }, [gameState]);
 
@@ -88,10 +108,12 @@ const App = () => {
         <Overlay
           onClick={() => setShouldShowOverlay(false)}
           gameState={gameState}
+          size={size}
+          minePercentage={minePercentage}
         />
       )}
       <div className="App-createdBy">
-        Created with React by Konstantin Modin © 2020{' '}
+        Created with React by Konstantin Modin © 2020
       </div>
     </div>
   );

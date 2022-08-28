@@ -1,0 +1,15 @@
+.Results {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 2rem 1rem;
+  border-radius: 1rem;
+  color: white;
+}
+
+.Results h3,
+h4 {
+  margin: 3px 0;
+}
+
+.ResultsBlock {
+  margin-top: 7px;
+}

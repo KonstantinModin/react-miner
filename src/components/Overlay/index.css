@@ -1,5 +1,7 @@
 .Overlay {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 100vw;
   z-index: 100;
@@ -13,7 +15,17 @@
 }
 
 .Overlay-contentWrapper {
+  display: flex;
+  flex-direction: column;
   margin: auto;
+}
+
+.Overlay-label {
   font-size: 10rem;
-  color: rgb(199, 103, 103);
+}
+
+@media screen and (max-width: 600px) {
+  .Overlay-label {
+    font-size: 5rem;
+  }
 }
